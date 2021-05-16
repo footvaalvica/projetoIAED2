@@ -12,5 +12,6 @@
 
 /*PROTOTIPOS DE FUNCOES*/
 void help();
+void set(char *path, char *value);
 
 #endif

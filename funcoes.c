@@ -13,12 +13,17 @@
 */
 void help()
 {
-    printf("help	Imprime os comandos disponíveis.\n");
-    printf("quit	Termina o programa.\n");
-    printf("set	Adiciona ou modifica o valor a armazenar.\n");
-    printf("print	Imprime todos os caminhos e valores.\n");
-    printf("find	Imprime o valor armazenado.\n");
-    printf("list	Lista todos os componentes imediatos de um sub-caminho.\n");
-    printf("search	Procura o caminho dado um valor.\n");
-    printf("delete	Apaga um caminho e todos os subcaminhos.\n");
+    printf("help: Imprime os comandos disponíveis.\n");
+    printf("quit: Termina o programa.\n");
+    printf("set: Adiciona ou modifica o valor a armazenar.\n");
+    printf("print: Imprime todos os caminhos e valores.\n");
+    printf("find: Imprime o valor armazenado.\n");
+    printf("list: Lista todos os componentes imediatos de um sub-caminho.\n");
+    printf("search: Procura o caminho dado um valor.\n");
+    printf("delete: Apaga um caminho e todos os subcaminhos.\n");
+}
+
+void set(char *path, char *value)
+{
+    printf("piroca\n");
 }
