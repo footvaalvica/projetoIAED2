@@ -7,11 +7,9 @@
 #ifndef FUNCOES_H_INCLUDED
 #define FUNCOES_H_INCLUDED
 
-/*INCLUDES*/
-#include <stdio.h>
-
 /*PROTOTIPOS DE FUNCOES*/
 void help();
-void set(char *path, char *value);
+void set(char *input);
+void print();
 
 #endif

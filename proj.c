@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include "funcoes.h"
 
 /* Defines */
@@ -12,6 +13,7 @@
 #define HELP "help"
 #define SET "set"
 #define QUIT "quit"
+#define PRINT "print"
 
 /*FUNCAO MAIN*/
 
@@ -19,6 +21,8 @@
   main: () -> int
   Primeira funcao a ser executada, trata de reconhecer e processar o input para cada função
 */
+
+void init();
 
 int main() 
 {   
@@ -32,7 +36,9 @@ int main()
             help();
         } else if (strcmp(input, SET) == 0) {
             fgets(input, (MAX_CHAR + 1), stdin);
-            /* mover o pointer para a frente na string para tirar o primeiro white space */
+            set(input);
+        } else if (strcmp(input, PRINT) == 0) {
+            print();
         }
     }
     while(strcmp(input, QUIT) != 0);
