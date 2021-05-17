@@ -7,6 +7,9 @@
 #ifndef FUNCOES_H_INCLUDED
 #define FUNCOES_H_INCLUDED
 
+#define SLICE "/"
+#define SPACE " "
+
 /*PROTOTIPOS DE FUNCOES*/
 void help();
 void set(char *input);

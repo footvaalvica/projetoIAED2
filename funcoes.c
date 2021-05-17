@@ -1,7 +1,7 @@
 /*
-  Ficheiro: funcoes.c
-  Autor: Bruno Miguel da Silva Mendes ist195544/al95544
-  Descricao: Ficheiro que contem as funcoes principais
+    Ficheiro: funcoes.c
+    Autor: Mateus Leite Pinho ist199282/al99282
+    Descricao: Ficheiro que contem as funcoes principais
 */
 
 /*INCLUDES*/
@@ -9,17 +9,46 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "linkedList.h"
 
-/* slice path const */
-const char slice[2] = "/";
-char *token;
-char *stringSet;
-linkedListLink linkedListHead = NULL;
-linkedListLink linkedListTail = NULL;
-const char space = ' ';
-char *string2;
-char *string1;
+char* pathProcessing(char *input)
+{
+    char *string = input + 1;
+    char *token;
+    char *path;
+    char *pathFixed;
+
+    /* remove \n from string */
+    string[strcspn(string, "\n")] = '\0';
+	/* get the first token */
+	token = strtok(string, SPACE);
+    
+    /*first token is path */
+    path = (char *)malloc(sizeof(char) * (strlen(token) + 1));
+    strcpy(path, token);
+
+    /* allocates memory to place newPath */
+    pathFixed = (char *)malloc(sizeof(char) * (strlen(path) + 1));
+
+    /*get the first token */
+    token = strtok(string, SLICE);
+
+    /* walk through other tokens and generate pathFixed, removing all
+    excess '/' characters*/
+	while(token != NULL) {
+		strcat(pathFixed, token);
+        strcat(pathFixed, SLICE);
+		token = strtok(NULL, SLICE);
+   	}
+
+    /* remove the last '/' from pathFixed */
+    if (pathFixed[strlen(pathFixed) - 1] == '/') {
+        pathFixed[strlen(pathFixed) - 1] = '\0';
+    }
+
+    free(path);
+
+    return pathFixed;
+}
 
 /*
 	help: () -> void
@@ -37,45 +66,21 @@ void help()
     printf("delete: Apaga um caminho e todos os subcaminhos.\n");
 }
 
+
 void set(char *input)
 {
-	char* inputWithoutSpace = input + 1;
-    /* adicionar um ao pointer para tirar o primeiro white space */
-    string2 = (strchr(inputWithoutSpace, space) + 1);
+    char *value = input + 1;
+    char *path;
+    int chopVal;
 
-    /* copy inputWithOutSpace to string1 */     
-    string1 = (char *) malloc(sizeof(char) * (strlen(inputWithoutSpace)));
-    strcpy(string1, inputWithoutSpace);
+    path = pathProcessing(input);
+    chopVal = strcspn(string, " ");
+    value = string + chopVal + 1;
 
-    /* remove \n from strings */
-    string1[strcspn(string1, "\n")] = '\0';
-    string2[strcspn(string2, "\n")] = '\0';
-
-    /* slice first string at ' ', seg faults if value is null, prolly need to fix this */
-    string1[strcspn(string1, " ")] = '\0';
-
-    /* creating string to store */
-    stringSet = (char *) malloc(sizeof(char) * (strlen(string1) + strlen(string2) + 1));
-	
-	/* get the first token
-	token = strtok(string1, slice);
-   
-	walk through other tokens
-	while(token != NULL) {
-		printf("%s\n", token);
-		token = strtok(NULL, slice);
-   	}
-    */
-    strcpy(stringSet, string1);
-    strcat(stringSet, " ");
-    strcat(stringSet, string2);
-
-    linkedListHead = insertEnd(linkedListHead, stringSet);
-
-	free(string1);
-	free(stringSet);
+    free(path);
+    free(value);
 }
 
 void print() {
-	printList(linkedListHead);
+	/* printList(linkedListHead); */
 }
