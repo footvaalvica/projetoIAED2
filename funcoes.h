@@ -14,5 +14,7 @@
 void help();
 void set(char *input);
 void print();
+void find(char *input);
+void search(char *input);
 
 #endif

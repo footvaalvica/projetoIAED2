@@ -6,9 +6,13 @@
 
 /*INCLUDES*/
 #include "funcoes.h"
+#include "linkedList.h"
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+
+/* global need to fix */
+link LLHead = NULL;
 
 char* pathProcessing(char *input)
 {
@@ -66,21 +70,72 @@ void help()
     printf("delete: Apaga um caminho e todos os subcaminhos.\n");
 }
 
-
 void set(char *input)
 {
-    char *value = input + 1;
+    char *string = input + 1;
     char *path;
+    char *value;
+    char *valueChopped;
     int chopVal;
 
-    path = pathProcessing(input);
-    chopVal = strcspn(string, " ");
-    value = string + chopVal + 1;
+    /* remove \n from string */
+    string[strcspn(string, "\n")] = '\0';
 
+    /* copy string to value */
+    value = (char *)malloc(sizeof(char) * (strlen(string) + 1));
+    strcpy(value, string);
+    
+    chopVal = strcspn(value, " ");
+    valueChopped = value + chopVal + 1;
+
+    path = pathProcessing(input);
+
+    LLHead = insertEnd(LLHead, path, valueChopped);
+    
+    /* free allocated memory */
     free(path);
     free(value);
 }
 
 void print() {
-	/* printList(linkedListHead); */
+	printList(LLHead);
+}
+
+void find(char *input)
+{   
+    char *path;
+    link t;
+
+    path = pathProcessing(input);
+    t = lookupPath(LLHead, path);
+
+    if (t == NULL) {
+        printf("not found\n");
+    } else if (strcmp(t->value, "") == 0) {
+        printf("no data\n");
+    } else {
+        printf("%s\n", t->value);
+    }
+
+    free(t);
+    free(path);
+}
+
+void search(char *input)
+{
+    char *value = input + 1;
+    link t;
+
+    /* remove \n from string */
+    value[strcspn(value, "\n")] = '\0';
+
+    t = lookupValue(LLHead, value);
+
+    if (t == NULL) {
+        printf("not found\n");
+    } else {
+        printf("/%s\n", t->path);
+    }
+
+    free(t);
 }

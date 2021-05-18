@@ -4,6 +4,7 @@
         "string.h": "c",
         "stdio.h": "c",
         "avl.h": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "type_traits": "c"
     }
 }
