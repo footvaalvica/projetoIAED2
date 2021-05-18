@@ -7,6 +7,8 @@
 #ifndef FUNCOES_H_INCLUDED
 #define FUNCOES_H_INCLUDED
 
+#include "avl.h"
+
 #define SLICE "/"
 #define SPACE " "
 

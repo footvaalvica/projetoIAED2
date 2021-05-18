@@ -4,6 +4,8 @@
 #include <string.h>
 #include <stdlib.h>
 #include "funcoes.h"
+#include "linkedList.h"
+#include "avl.h"
 
 /* Defines */
 
@@ -23,8 +25,9 @@
   main: () -> int
   Primeira funcao a ser executada, trata de reconhecer e processar o input para cada função
 */
-int main() 
+int main()
 {   
+    /* inits avl and linked list */
     /*Variavel que contem o comando a ser executado*/
     char input[MAX_CHAR];
     /*Le carateres da stdin ate encontrar o caso terminal ou 

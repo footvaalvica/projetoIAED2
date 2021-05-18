@@ -7,6 +7,7 @@
 /*INCLUDES*/
 #include "funcoes.h"
 #include "linkedList.h"
+#include "avl.h"
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
