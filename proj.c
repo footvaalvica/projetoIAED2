@@ -4,14 +4,14 @@
 #include <string.h>
 #include <stdlib.h>
 #include "funcoes.h"
-#include "linkedList.h"
-#include "avl.h"
 
 /* Defines */
 
 #define MAX_CHAR 65536
 
 /* string defines */
+#define DELETE "delete"
+#define LIST "list"
 #define FIND "find"
 #define HELP "help"
 #define SET "set"
@@ -47,6 +47,12 @@ int main()
         } else if (strcmp(input, SEARCH) == 0) {
             fgets(input, MAX_CHAR, stdin);
             search(input);
+        } else if (strcmp(input, LIST) == 0) {
+            fgets(input, MAX_CHAR, stdin);
+            list(input);
+        } else if (strcmp(input, DELETE) == 0) {
+            fgets(input, MAX_CHAR, stdin);
+            delete(input);
         }
     }
     while(strcmp(input, QUIT) != 0);

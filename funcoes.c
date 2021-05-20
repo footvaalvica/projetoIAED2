@@ -14,6 +14,12 @@
 
 /* global need to fix */
 link LLHead = NULL;
+avlLink root = NULL;
+
+void pathSlicer(char *path)
+{
+    puts(path);
+}
 
 char* pathProcessing(char *input)
 {
@@ -78,6 +84,7 @@ void set(char *input)
     char *value;
     char *valueChopped;
     int chopVal;
+    link t;
 
     /* remove \n from string */
     string[strcspn(string, "\n")] = '\0';
@@ -91,9 +98,18 @@ void set(char *input)
 
     path = pathProcessing(input);
 
+    /* optimize with hashtable */
+    t = lookupPath(LLHead, path);
+    if (t != NULL) {
+        /* delete and reinsert */
+        LLHead = insertEnd(LLHead, path, valueChopped);
+    }
+
     LLHead = insertEnd(LLHead, path, valueChopped);
-    
+    root = insert(root, path);
+
     /* free allocated memory */
+    free(t);
     free(path);
     free(value);
 }
@@ -139,4 +155,26 @@ void search(char *input)
     }
 
     free(t);
+}
+
+void list(char *input)
+{
+    char *path;
+    int pathLen;
+
+    if (strcmp(input, "\n") == 0) {
+        printAVL(root, -1, ""); 
+    } else {
+        path = pathProcessing(input);
+        pathLen = strlen(path);
+        printAVL(root, pathLen, path);
+        free(path);
+    }
+}
+
+void delete(char *input)
+{
+    if (strcmp(input, "\n") == 0) {
+        deleteList(&LLHead);
+    }
 }

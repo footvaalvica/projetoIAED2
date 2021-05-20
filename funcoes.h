@@ -18,5 +18,7 @@ void set(char *input);
 void print();
 void find(char *input);
 void search(char *input);
+void list(char *input);
+void delete(char *input);
 
 #endif

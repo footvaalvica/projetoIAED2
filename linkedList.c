@@ -72,7 +72,7 @@ void printList(link head)
     }
 }
 
-link deleteLinkedList(link head, char *path)
+link deleteFromLinkedList(link head, char *path)
 {
     link t, prev;
     for (t = head, prev = NULL; t != NULL;
@@ -91,4 +91,21 @@ link deleteLinkedList(link head, char *path)
     return head;
 }
 
+void deleteList(struct node** head)
+{
+    /* deref head_ref to get the real head */
+    struct node* current = *head;
+    struct node* next;
+ 
+    while (current != NULL)
+    {
+        next = current->next;
+        FREEnode(current);
+        current = next;
+    }
+   
+    /* deref head_ref to affect the real head back
+      in the caller. */
+    *head = NULL;
+}
 
