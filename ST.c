@@ -1,10 +1,22 @@
 #include "ST.h"
+#include <string.h>
 
 struct STnode {
-    Item item; 
+    char *item; 
     avlLink l, r; 
-    int height
+    int height;
 };
+
+
+int height(avlLink h){
+    if (h == NULL) return 0;
+    return h->height;
+}
+
+avlLink max(avlLink h) {
+    if (h == NULL || h->r == NULL) return h;
+    else return max(h->r);
+}
 
 void update_height(avlLink h)
 {
@@ -15,7 +27,7 @@ void update_height(avlLink h)
     height_right + 1;
 }
 
-avlLink new(Item item, avlLink l, avlLink r)
+avlLink new(char* item, avlLink l, avlLink r)
 {
     avlLink x = (avlLink)malloc(sizeof(struct STnode));
 
@@ -25,13 +37,8 @@ avlLink new(Item item, avlLink l, avlLink r)
 
     x->l = l;
     x->r = r;
-    x->height=1;
+    x->height = 1;
     return x;
-}
-
-int height(avlLink h){
-    if (h == NULL) return 0;
-    return h->height;
 }
 
 avlLink rotL(avlLink h) 
@@ -90,26 +97,27 @@ avlLink AVLbalance(avlLink h) {
     return h; 
 }
 
-avlLink insertR(avlLink h, Item item) 
+avlLink insertR(avlLink h, char *item) 
 {
-    if (h == NULL) 
+    if (h == NULL) {
         return new(item, NULL, NULL);
+    }
     if ((strcmp(item, h->item) < 0))
         h->l = insertR(h->l, item);
     else 
         h->r = insertR(h->r, item);
-    h=AVLbalance(h);
+    h = AVLbalance(h);
     return h;
 }
 
-avlLink deleteR(avlLink h, Key k) {
+avlLink deleteR(avlLink h, char* k) {
     if (h==NULL) return h; 
     else if ((strcmp(k, h->item) < 0)) h->l=deleteR(h->l,k);
     else if ((strcmp(h->item, k) < 0)) h->r=deleteR(h->r,k) ;
     else {
         if (h->l !=NULL && h->r !=NULL) { 
             avlLink aux = max(h->l);
-            {Item x; x=h->item; h->item=aux->item; aux->item=x;} 
+            {char* x; x=h->item; h->item=aux->item; aux->item=x;} 
             h->l= deleteR(h->l, aux->item);
         }
         else {
@@ -123,4 +131,112 @@ avlLink deleteR(avlLink h, Key k) {
     } 
     h = AVLbalance(h);
     return h;
+}
+
+avlLink STinsert(avlLink head, char *item)
+{   
+    head = insertR(head, item);
+    return head;
+}
+
+char* searchR(avlLink h, char *v)
+{
+    if (h == NULL)
+        return NULL;
+    if (strcmp(v, h->item) == 0)
+        return h->item;
+    if (strcmp(v, h->item) == 0)
+        return searchR(h->l, v);
+    else
+        return searchR(h->r, v);
+}
+
+char* STsearch(avlLink head, char *v)
+{
+    return searchR(head, v);
+}
+
+avlLink STdelete(avlLink head, char *k) {
+    head = deleteR(head, k);
+    return head;
+}
+
+avlLink freeR(avlLink h)
+{
+    if (h == NULL)
+    return h;
+    h->l = freeR(h->l);
+    h->r = freeR(h->r);
+    return deleteR(h, h->item);
+}
+
+avlLink STfree(avlLink head)
+{
+    head = freeR(head);
+    return head;
+}
+
+void sortR(avlLink h, int pathLen, char *input)
+{
+    char *path;
+    char *pathChopped;
+    char *helper;
+    int compareBytes;
+
+    if (h == NULL)
+    return;
+
+    compareBytes = strlen(input);
+
+    sortR(h->l, pathLen, input);
+
+    /* allocating memory for a string */
+    path = (char *) malloc(sizeof(char) * (strlen(h->item) + 1));
+    strcpy(path, h->item);
+        
+    pathChopped = path + pathLen + 1;
+
+    if (strcmp(pathChopped, "") != 0) {
+        if (strncmp(path, input, compareBytes) == 0) {
+            helper = strchr(pathChopped, '/');
+            if (helper == NULL) {
+                printf("%s\n", pathChopped);
+            }
+        }
+    }
+
+    free(path);
+
+    sortR(h->r, pathLen, input);
+}
+
+void STsort(avlLink head, int pathLen, char *input)
+{
+    sortR(head, pathLen, input);
+}
+
+void STsortDelete(avlLink h, int pathLen, char *input)
+{
+    char *path;
+    int compareBytes;
+
+    if (h == NULL)
+    return;
+
+    compareBytes = strlen(input);
+
+    STsortDelete(h->l, pathLen, input);
+
+    /* allocating memory for a string */
+    path = (char *) malloc(sizeof(char) * (strlen(h->item) + 1));
+    strcpy(path, h->item);
+
+    if (strcmp(path, "") != 0) {
+        if (strncmp(path, input, compareBytes) == 0) {
+            printf("%s\n", path);
+        }
+    }
+
+    free(path);
+    STsortDelete(h->r, pathLen, input);
 }

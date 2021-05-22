@@ -4,17 +4,15 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-typedef char* Item;
-typedef char* Key;
-
 typedef struct STnode* avlLink;
 
 void STinit(avlLink*);
 int STcount(avlLink);
-Item STsearch(avlLink,Key);
-void STinsert(avlLink*,Item);
-void STdelete(avlLink*,Key);
-void STsort(avlLink,void (*visit)(Item));
-void STfree(avlLink*);
+char* STsearch(avlLink, char*);
+avlLink STinsert(avlLink, char*);
+avlLink STdelete(avlLink head, char *k);
+void STsort(avlLink head, int pathLen, char *input);
+void STsortDelete(avlLink head, int pathLen, char *input);
+avlLink STfree(avlLink head);
 
 #endif

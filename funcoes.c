@@ -20,7 +20,6 @@ void pathProcessingSet(char *input, char *valueChopped)
 {
     char *string = input + 1;
     char *token;
-    char *path;
     char *pathFixed;
     link t;
 
@@ -28,13 +27,11 @@ void pathProcessingSet(char *input, char *valueChopped)
     string[strcspn(string, "\n")] = '\0';
 	/* get the first token */
 	token = strtok(string, SPACE);
-    
-    /*first token is path */
-    path = (char *)malloc(sizeof(char) * (strlen(token) + 1));
-    strcpy(path, token);
 
     /* allocates memory to place newPath */
-    pathFixed = (char *)malloc(sizeof(char) * (strlen(path) + 1));
+    pathFixed = (char *)malloc(sizeof(char) * (strlen(token) + 1));
+    /* initializes path fixed */
+    strcpy(pathFixed, "");
 
     /*get the first token */
     token = strtok(string, SLICE);
@@ -48,7 +45,7 @@ void pathProcessingSet(char *input, char *valueChopped)
 
         if (t == NULL) {
             LLHead = insertEnd(LLHead, pathFixed, "");
-            root = insert(root, pathFixed);
+            root = STinsert(root, pathFixed);
         }
 
         strcat(pathFixed, SLICE);
@@ -62,12 +59,11 @@ void pathProcessingSet(char *input, char *valueChopped)
 
     /* change the value only */
     t = lookupPath(LLHead, pathFixed);
-
+    free(t->value);
     t->value = (char *)malloc(sizeof(char) * (strlen(valueChopped) + 1));
     strcpy(t->value, valueChopped);
 
     /* free allocated memory */
-    free(path);
     free(pathFixed);
 }
 
@@ -193,18 +189,27 @@ void list(char *input)
     int pathLen;
 
     if (strcmp(input, "\n") == 0) {
-        printAVL(root, -1, ""); 
+        STsort(root, -1, "");
     } else {
         path = pathProcessing(input);
         pathLen = strlen(path);
-        printAVL(root, pathLen, path);
+        STsort(root, pathLen, path);
         free(path);
     }
 }
 
 void delete(char *input)
 {
+    char *path;
+    int pathLen;
+
     if (strcmp(input, "\n") == 0) {
         deleteList(&LLHead);
+        root = STfree(root);
+    } else {
+        path = pathProcessing(input);
+        pathLen = strlen(path);
+        STsortDelete(root, pathLen, path);
+        free(path);
     }
 }
