@@ -161,7 +161,7 @@ void printAVL(struct Node *root, int pathLen, char *input)
                 }
             }
         }
-        
+
         free(path);
 
         printAVL(root->right, pathLen, input);

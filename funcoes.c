@@ -16,9 +16,59 @@
 link LLHead = NULL;
 avlLink root = NULL;
 
-void pathSlicer(char *path)
+void pathProcessingSet(char *input, char *valueChopped)
 {
-    puts(path);
+    char *string = input + 1;
+    char *token;
+    char *path;
+    char *pathFixed;
+    link t;
+
+    /* remove \n from string */
+    string[strcspn(string, "\n")] = '\0';
+	/* get the first token */
+	token = strtok(string, SPACE);
+    
+    /*first token is path */
+    path = (char *)malloc(sizeof(char) * (strlen(token) + 1));
+    strcpy(path, token);
+
+    /* allocates memory to place newPath */
+    pathFixed = (char *)malloc(sizeof(char) * (strlen(path) + 1));
+
+    /*get the first token */
+    token = strtok(string, SLICE);
+
+    /* walk through other tokens and generate pathFixed, removing all
+    excess '/' characters*/
+	while(token != NULL) {
+		strcat(pathFixed, token);
+
+        t = lookupPath(LLHead, pathFixed);
+
+        if (t == NULL) {
+            LLHead = insertEnd(LLHead, pathFixed, "");
+            root = insert(root, pathFixed);
+        }
+
+        strcat(pathFixed, SLICE);
+		token = strtok(NULL, SLICE);
+   	}
+
+    /* remove the last '/' from pathFixed */
+    if (pathFixed[strlen(pathFixed) - 1] == '/') {
+        pathFixed[strlen(pathFixed) - 1] = '\0';
+    }
+
+    /* change the value only */
+    t = lookupPath(LLHead, pathFixed);
+
+    t->value = (char *)malloc(sizeof(char) * (strlen(valueChopped) + 1));
+    strcpy(t->value, valueChopped);
+
+    /* free allocated memory */
+    free(path);
+    free(pathFixed);
 }
 
 char* pathProcessing(char *input)
@@ -56,8 +106,6 @@ char* pathProcessing(char *input)
         pathFixed[strlen(pathFixed) - 1] = '\0';
     }
 
-    free(path);
-
     return pathFixed;
 }
 
@@ -80,11 +128,9 @@ void help()
 void set(char *input)
 {
     char *string = input + 1;
-    char *path;
     char *value;
     char *valueChopped;
     int chopVal;
-    link t;
 
     /* remove \n from string */
     string[strcspn(string, "\n")] = '\0';
@@ -96,21 +142,8 @@ void set(char *input)
     chopVal = strcspn(value, " ");
     valueChopped = value + chopVal + 1;
 
-    path = pathProcessing(input);
+    pathProcessingSet(input, valueChopped);
 
-    /* optimize with hashtable */
-    t = lookupPath(LLHead, path);
-    if (t != NULL) {
-        /* delete and reinsert */
-        LLHead = insertEnd(LLHead, path, valueChopped);
-    }
-
-    LLHead = insertEnd(LLHead, path, valueChopped);
-    root = insert(root, path);
-
-    /* free allocated memory */
-    free(t);
-    free(path);
     free(value);
 }
 
@@ -134,7 +167,6 @@ void find(char *input)
         printf("%s\n", t->value);
     }
 
-    free(t);
     free(path);
 }
 
@@ -153,8 +185,6 @@ void search(char *input)
     } else {
         printf("/%s\n", t->path);
     }
-
-    free(t);
 }
 
 void list(char *input)
