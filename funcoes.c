@@ -209,7 +209,7 @@ void delete(char *input)
     } else {
         path = pathProcessing(input);
         pathLen = strlen(path);
-        STsortDelete(root, pathLen, path);
+        root = STsortDelete(root, pathLen, path);
         free(path);
     }
 }

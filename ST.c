@@ -156,9 +156,8 @@ char* STsearch(avlLink head, char *v)
     return searchR(head, v);
 }
 
-avlLink STdelete(avlLink head, char *k) {
-    head = deleteR(head, k);
-    return head;
+void STdelete(avlLink* head, char *k) {
+    *head = deleteR(*head, k);
 }
 
 avlLink freeR(avlLink h)
@@ -221,7 +220,7 @@ void STsortDelete(avlLink h, int pathLen, char *input)
     int compareBytes;
 
     if (h == NULL)
-    return;
+    return NULL;
 
     compareBytes = strlen(input);
 
@@ -233,10 +232,11 @@ void STsortDelete(avlLink h, int pathLen, char *input)
 
     if (strcmp(path, "") != 0) {
         if (strncmp(path, input, compareBytes) == 0) {
-            printf("%s\n", path);
+            h = STdelete(h, path);
         }
     }
-
     free(path);
     STsortDelete(h->r, pathLen, input);
+
+    return h;
 }

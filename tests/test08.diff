@@ -1,7 +1,10 @@
-6,9d5
-< tests
-< tests/Makefile
-< tests/test01.in
-< tests/test02.in
-14d9
-< tests
+0a1,9
+> Makefile
+> README.md
+> guidelines.md
+> proj2.c
+> tests
+> Makefile
+> README.md
+> guidelines.md
+> proj2.c
