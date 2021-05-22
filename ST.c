@@ -1,4 +1,7 @@
 #include "ST.h"
+#include "linkedList.h"
+#include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 
 struct STnode {
@@ -6,7 +9,6 @@ struct STnode {
     avlLink l, r; 
     int height;
 };
-
 
 int height(avlLink h){
     if (h == NULL) return 0;
@@ -214,17 +216,19 @@ void STsort(avlLink head, int pathLen, char *input)
     sortR(head, pathLen, input);
 }
 
-void STsortDelete(avlLink h, int pathLen, char *input)
+void STsortDelete(avlLink *head, link *headLL, int pathLen, char *input)
 {
     char *path;
     int compareBytes;
+    avlLink h = *head;
+
 
     if (h == NULL)
-    return NULL;
+    return;
 
     compareBytes = strlen(input);
 
-    STsortDelete(h->l, pathLen, input);
+    STsortDelete(&(h->l), headLL, pathLen, input);
 
     /* allocating memory for a string */
     path = (char *) malloc(sizeof(char) * (strlen(h->item) + 1));
@@ -232,11 +236,11 @@ void STsortDelete(avlLink h, int pathLen, char *input)
 
     if (strcmp(path, "") != 0) {
         if (strncmp(path, input, compareBytes) == 0) {
-            h = STdelete(h, path);
+            STdelete(head, path);
+            deleteFromLinkedList(headLL, path);
         }
     }
-    free(path);
-    STsortDelete(h->r, pathLen, input);
 
-    return h;
+    free(path);
+    STsortDelete(&(h->r), headLL, pathLen, input);
 }

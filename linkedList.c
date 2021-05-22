@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "linkedList.h"
 
 /* função para dar free de todos os componentes de um node no delete */
@@ -72,23 +73,23 @@ void printList(link head)
     }
 }
 
-link deleteFromLinkedList(link head, char *path)
-{
-    link t, prev;
-    for (t = head, prev = NULL; t != NULL;
+void deleteFromLinkedList(struct node** head, char *path)
+{   
+    link t, prev, h = *head;
+
+    for (t = h, prev = NULL; t != NULL;
          prev = t, t = t->next)
     {
         if (strcmp(t->path, path) == 0)
         {
-            if (t == head)
-                head = t->next;
+            if (t == h)
+                h = t->next;
             else
                 prev->next = t->next;
             FREEnode(t);
             break;
         }
     }
-    return head;
 }
 
 void deleteList(struct node** head)

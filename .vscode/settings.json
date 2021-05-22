@@ -5,6 +5,8 @@
         "stdio.h": "c",
         "avl.h": "c",
         "stdlib.h": "c",
-        "type_traits": "c"
+        "type_traits": "c",
+        "st.h": "c",
+        "linkedlist.h": "c"
     }
 }
