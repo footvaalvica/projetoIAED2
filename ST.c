@@ -237,7 +237,7 @@ void STsortDelete(avlLink *head, link *headLL, int pathLen, char *input)
     if (strcmp(path, "") != 0) {
         if (strncmp(path, input, compareBytes) == 0) {
             STdelete(head, path);
-            deleteFromLinkedList(headLL, path);
+            deleteFromLinkedList(*headLL, path);
         }
     }
 

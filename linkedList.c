@@ -73,9 +73,9 @@ void printList(link head)
     }
 }
 
-void deleteFromLinkedList(struct node** head, char *path)
+link deleteFromLinkedList(link h, char *path)
 {   
-    link t, prev, h = *head;
+    link t, prev;
 
     for (t = h, prev = NULL; t != NULL;
          prev = t, t = t->next)
@@ -90,6 +90,7 @@ void deleteFromLinkedList(struct node** head, char *path)
             break;
         }
     }
+    return h;
 }
 
 void deleteList(struct node** head)

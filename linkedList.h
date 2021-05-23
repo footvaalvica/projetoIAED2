@@ -11,7 +11,7 @@ link insertEnd(link head, char *path, char *value);
 link lookupValue(link head, char *value);
 link lookupPath(link head, char *path);
 void printList(link head);
-void deleteFromLinkedList(struct node** head, char *path);
+link deleteFromLinkedList(link head, char *path);
 void deleteList(struct node** head);
 
 #endif

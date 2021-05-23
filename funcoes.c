@@ -209,7 +209,8 @@ void delete(char *input)
     } else {
         path = pathProcessing(input);
         pathLen = strlen(path);
-        STsortDelete(&root, &LLHead, pathLen, path);
+        STdelete(&root, path);
+        LLHead = deleteFromLinkedList(LLHead, path);
         free(path);
     }
 }
