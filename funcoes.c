@@ -202,7 +202,7 @@ void delete(char *input)
 {
     char *path;
     link t;
-    /* int pathLen; */
+    int pathLen;
 
     if (strcmp(input, "\n") == 0) {
         deleteList(&LLHead);
@@ -216,7 +216,8 @@ void delete(char *input)
             free(path);
             return;
         } else {
-        /* pathLen = strlen(path); */
+        pathLen = strlen(path);
+        STsortDelete(&root, &LLHead, pathLen, input);
         STdelete(&root, path);
         LLHead = deleteFromLinkedList(LLHead, path);
         free(path);

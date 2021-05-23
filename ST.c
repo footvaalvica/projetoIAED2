@@ -229,6 +229,7 @@ void STsortDelete(avlLink *head, link *headLL, int pathLen, char *input)
     compareBytes = strlen(input);
 
     STsortDelete(&(h->l), headLL, pathLen, input);
+    STsortDelete(&(h->r), headLL, pathLen, input);
 
     /* allocating memory for a string */
     path = (char *) malloc(sizeof(char) * (strlen(h->item) + 1));
@@ -242,5 +243,4 @@ void STsortDelete(avlLink *head, link *headLL, int pathLen, char *input)
     }
 
     free(path);
-    STsortDelete(&(h->r), headLL, pathLen, input);
 }
