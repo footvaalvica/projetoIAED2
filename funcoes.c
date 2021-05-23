@@ -210,7 +210,6 @@ void delete(char *input)
     } else {
         path = pathProcessing(input);
         t = lookupPath(LLHead, path);
-
         if (t == NULL) {
             puts("not found\n");
             free(path);
