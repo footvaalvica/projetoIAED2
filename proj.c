@@ -56,5 +56,6 @@ int main()
         }
     }
     while(strcmp(input, QUIT) != 0);
+    delete("\n");
     return 0;
 }

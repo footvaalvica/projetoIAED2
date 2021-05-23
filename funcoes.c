@@ -201,16 +201,25 @@ void list(char *input)
 void delete(char *input)
 {
     char *path;
-    int pathLen;
+    link t;
+    /* int pathLen; */
 
     if (strcmp(input, "\n") == 0) {
         deleteList(&LLHead);
         root = STfree(root);
     } else {
         path = pathProcessing(input);
-        pathLen = strlen(path);
+        t = lookupPath(LLHead, path);
+
+        if (t == NULL) {
+            puts("not found\n");
+            free(path);
+            return;
+        } else {
+        /* pathLen = strlen(path); */
         STdelete(&root, path);
         LLHead = deleteFromLinkedList(LLHead, path);
         free(path);
+        }
     }
 }
