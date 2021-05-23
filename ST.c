@@ -216,15 +216,14 @@ void STsort(avlLink head, int pathLen, char *input)
     sortR(head, pathLen, input);
 }
 
-void STsortDelete(avlLink *head, link *headLL, int pathLen, char *input)
+link STsortDelete(avlLink *head, link headLL, int pathLen, char *input)
 {
     char *path;
     int compareBytes;
     avlLink h = *head;
 
-
     if (h == NULL)
-    return;
+    return NULL;
 
     compareBytes = strlen(input);
 
@@ -237,10 +236,12 @@ void STsortDelete(avlLink *head, link *headLL, int pathLen, char *input)
 
     if (strcmp(path, "") != 0) {
         if (strncmp(path, input, compareBytes) == 0) {
+            puts(path);
             STdelete(head, path);
-            deleteFromLinkedList(*headLL, path);
+            headLL = deleteFromLinkedList(headLL, path);
         }
     }
 
     free(path);
+    return headLL;
 }

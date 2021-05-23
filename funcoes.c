@@ -111,14 +111,14 @@ char* pathProcessing(char *input)
 */
 void help()
 {
-    printf("help: Imprime os comandos disponíveis.\n");
-    printf("quit: Termina o programa.\n");
-    printf("set: Adiciona ou modifica o valor a armazenar.\n");
-    printf("print: Imprime todos os caminhos e valores.\n");
-    printf("find: Imprime o valor armazenado.\n");
-    printf("list: Lista todos os componentes imediatos de um sub-caminho.\n");
-    printf("search: Procura o caminho dado um valor.\n");
-    printf("delete: Apaga um caminho e todos os subcaminhos.\n");
+    printf(HELP_STRING);
+    printf(QUIT_STRING);
+    printf(SET_STRING);
+    printf(PRINT_STRING);
+    printf(FIND_STRING);
+    printf(LIST_STRING);
+    printf(SEARCH_STRING);
+    printf(DELETE_STRING);
 }
 
 void set(char *input)
@@ -135,7 +135,7 @@ void set(char *input)
     value = (char *)malloc(sizeof(char) * (strlen(string) + 1));
     strcpy(value, string);
     
-    chopVal = strcspn(value, " ");
+    chopVal = strcspn(value, SPACE);
     valueChopped = value + chopVal + 1;
 
     pathProcessingSet(input, valueChopped);
@@ -156,9 +156,9 @@ void find(char *input)
     t = lookupPath(LLHead, path);
 
     if (t == NULL) {
-        printf("not found\n");
+        printf(NOT_FOUND);
     } else if (strcmp(t->value, "") == 0) {
-        printf("no data\n");
+        printf(NO_DATA);
     } else {
         printf("%s\n", t->value);
     }
@@ -177,7 +177,7 @@ void search(char *input)
     t = lookupValue(LLHead, value);
 
     if (t == NULL) {
-        printf("not found\n");
+        printf(NOT_FOUND);
     } else {
         printf("/%s\n", t->path);
     }
@@ -204,19 +204,19 @@ void delete(char *input)
     link t;
     int pathLen;
 
-    if (strcmp(input, "\n") == 0) {
+    if (strcmp(input, "\n") == 0 || (strcmp(input, "/\n") == 0)) {
         deleteList(&LLHead);
         root = STfree(root);
     } else {
         path = pathProcessing(input);
         t = lookupPath(LLHead, path);
         if (t == NULL) {
-            puts("not found\n");
+            puts(NOT_FOUND);
             free(path);
             return;
         } else {
         pathLen = strlen(path);
-        STsortDelete(&root, &LLHead, pathLen, input);
+        LLHead = STsortDelete(&root, LLHead, pathLen, input);
         STdelete(&root, path);
         LLHead = deleteFromLinkedList(LLHead, path);
         free(path);

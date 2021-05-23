@@ -77,11 +77,8 @@ link deleteFromLinkedList(link h, char *path)
 {   
     link t, prev;
 
-    for (t = h, prev = NULL; t != NULL;
-         prev = t, t = t->next)
-    {
-        if (strcmp(t->path, path) == 0)
-        {
+    for (t = h, prev = NULL; t != NULL; prev = t, t = t->next) {
+        if (strcmp(t->path, path) == 0) {
             if (t == h)
                 h = t->next;
             else
@@ -92,6 +89,7 @@ link deleteFromLinkedList(link h, char *path)
     }
     return h;
 }
+
 
 void deleteList(struct node** head)
 {
