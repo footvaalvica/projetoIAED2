@@ -1,3 +1,5 @@
+/* RESPONDI ÀS PERGUNTAS 1 E 3 */
+
 /* INCLUDES */
 
 #include <stdio.h>

@@ -9,6 +9,9 @@ typedef struct node {
 
 link insertEnd(link head, char *path, char *value);
 link lookupValue(link head, char *value);
+
+/*disponibilzei o insert begin */
+link insertBegin(link head, char *path, char *value);
 link lookupPath(link head, char *path);
 void printList(link head);
 link deleteFromLinkedList(link h, char *path);

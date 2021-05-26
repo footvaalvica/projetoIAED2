@@ -44,7 +44,8 @@ void pathProcessingSet(char *input, char *valueChopped)
         t = lookupPath(LLHead, pathFixed);
 
         if (t == NULL) {
-            LLHead = insertEnd(LLHead, pathFixed, "");
+            /* alterei o insertEnd para insertBegin */
+            LLHead = insertBegin(LLHead, pathFixed, "");
             root = STinsert(root, pathFixed);
         }
 

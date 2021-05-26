@@ -99,12 +99,15 @@ avlLink AVLbalance(avlLink h) {
     return h; 
 }
 
+/* alterei aqui a inserção na lista por ordem alfabetica, simplesmente insiro
+o maior agora */
+
 avlLink insertR(avlLink h, char *item) 
 {
     if (h == NULL) {
         return new(item, NULL, NULL);
     }
-    if ((strcmp(item, h->item) < 0))
+    if ((strcmp(item, h->item) > 0))
         h->l = insertR(h->l, item);
     else 
         h->r = insertR(h->r, item);
@@ -114,8 +117,8 @@ avlLink insertR(avlLink h, char *item)
 
 avlLink deleteR(avlLink h, char* k) {
     if (h==NULL) return h; 
-    else if ((strcmp(k, h->item) < 0)) h->l=deleteR(h->l,k);
-    else if ((strcmp(h->item, k) < 0)) h->r=deleteR(h->r,k) ;
+    else if ((strcmp(k, h->item) > 0)) h->l=deleteR(h->l,k);
+    else if ((strcmp(h->item, k) > 0)) h->r=deleteR(h->r,k) ;
     else {
         if (h->l !=NULL && h->r !=NULL) { 
             avlLink aux = max(h->l);
